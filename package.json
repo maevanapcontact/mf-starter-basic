@@ -1,9 +1,17 @@
 {
   "name": "mf-starter-basic",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "concurrently \"wsrun --parallel start\""
   },
   "author": "Maeva NGUYEN ANH PHUONG",
-  "license": "ISC"
+  "license": "ISC",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "concurrently": "^6.3.0",
+    "wsrun": "^5.2.4"
+  }
 }
