@@ -2,7 +2,8 @@
   "name": "consumer",
   "version": "1.0.0",
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open --mode development --live-reload --port 3000"
   },
   "author": "Maeva NGUYEN ANH PHUONG",
   "license": "ISC",

@@ -1,4 +1,7 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
+
+const deps = require("./package.json").dependencies;
 
 module.exports = {
   resolve: {
@@ -12,17 +15,32 @@ module.exports = {
       },
       {
         test: /\.(js|jsx)$/,
-        exclude: /(node_modules)/,
+        exclude: /node_modules/,
         use: {
           loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-react"],
-          },
         },
       },
     ],
   },
   plugins: [
+    new ModuleFederationPlugin({
+      name: "consumer",
+      filename: "remoteEntry.js",
+      remotes: {
+        remote: "remote@http://localhost:3001/remoteEntry.js",
+      },
+      exposes: {},
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: deps.react,
+        },
+        "react-dom": {
+          singleton: true,
+          requiredVersion: deps["react-dom"],
+        },
+      },
+    }),
     new HtmlWebpackPlugin({
       template: "./src/index.html",
     }),
